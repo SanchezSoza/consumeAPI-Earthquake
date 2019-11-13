@@ -1,21 +1,16 @@
 package cl.chl.rs.project.earthquake.service;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -23,15 +18,8 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.batch.BatchProperties.Job;
-import org.springframework.context.annotation.Primary;
-import org.springframework.web.client.RestTemplate;
 
-import cl.chl.rs.project.earthquake.model.MetadataModel;
 import cl.chl.rs.project.earthquake.model.SalidaModel;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class EarthquakeService {
 
@@ -64,12 +52,11 @@ public class EarthquakeService {
 			while (itrParticipants.hasNext()) {
 				JSONObject jObj = (itrParticipants).next();
 				Map propertiesMap = ((Map)jObj.get("properties")); 
-		          
+				SalidaModel properties = new SalidaModel();
 		        // iterating address Map 
 		        Iterator<Map.Entry> itr2 = propertiesMap.entrySet().iterator(); 
 		        while (itr2.hasNext()) {
 		            Map.Entry pair2 = itr2.next(); 
-		            SalidaModel properties = new SalidaModel();
 		            if(pair2.getKey().equals("dmin")) {
 		            	properties.setDmin((pair2.getValue() != null)?Double.parseDouble(pair2.getValue().toString()):0.0);
 		            }else if(pair2.getKey().equals("code")) {
@@ -157,12 +144,11 @@ public class EarthquakeService {
 			while (itrParticipants.hasNext()) {
 				JSONObject jObj = (itrParticipants).next();
 				Map propertiesMap = ((Map)jObj.get("properties")); 
-		          
+				SalidaModel properties = new SalidaModel();
 		        // iterating address Map 
 		        Iterator<Map.Entry> itr2 = propertiesMap.entrySet().iterator(); 
 		        while (itr2.hasNext()) {
 		            Map.Entry pair2 = itr2.next(); 
-		            SalidaModel properties = new SalidaModel();
 		            if(pair2.getKey().equals("dmin")) {
 		            	properties.setDmin((pair2.getValue() != null)?Double.parseDouble(pair2.getValue().toString()):0.0);
 		            }else if(pair2.getKey().equals("code")) {
@@ -249,28 +235,18 @@ public class EarthquakeService {
 	          
 	        // iterating address Map 
 	        Iterator<Map.Entry> itr1 = metadataMap.entrySet().iterator(); 
-	        while (itr1.hasNext()) { 
-	            Map.Entry pair = itr1.next(); 
-	            MetadataModel metadata = new MetadataModel();
-	            metadata.setGenerated(pair.getValue().toString());
-	            metadata.setCount(Integer.parseInt(pair.getValue().toString()));
-	            metadata.setApi(Double.parseDouble(pair.getValue().toString()));
-	            metadata.setTitle(pair.getValue().toString());
-	            metadata.setUrl(pair.getValue().toString());
-	            metadata.setStatus(Integer.parseInt(pair.getValue().toString())); 
-	        }
 			
 			JSONArray msg = (JSONArray) jo.get("features");
 			Iterator<JSONObject> itrParticipants = msg.iterator();
 			while (itrParticipants.hasNext()) {
 				JSONObject jObj = (itrParticipants).next();
 				Map propertiesMap = ((Map)jObj.get("properties")); 
-		          
+				SalidaModel properties = new SalidaModel();
 		        // iterating address Map 
 		        Iterator<Map.Entry> itr2 = propertiesMap.entrySet().iterator(); 
 		        while (itr2.hasNext()) {
 		            Map.Entry pair2 = itr2.next(); 
-		            SalidaModel properties = new SalidaModel();
+		            
 		            if(pair2.getKey().equals("dmin")) {
 		            	properties.setDmin((pair2.getValue() != null)?Double.parseDouble(pair2.getValue().toString()):0.0);
 		            }else if(pair2.getKey().equals("code")) {
@@ -340,12 +316,11 @@ public class EarthquakeService {
 			while (itr3.hasNext()) {
 				JSONObject jObj = (itr3).next();
 				Map propertiesMap = ((Map)jObj.get("properties")); 
-		          
+				SalidaModel properties = new SalidaModel();
 		        // iterating address Map 
 		        Iterator<Map.Entry> itr4 = propertiesMap.entrySet().iterator(); 
 		        while (itr4.hasNext()) {
 		            Map.Entry pair2 = itr4.next(); 
-		            SalidaModel properties = new SalidaModel();
 		            if(pair2.getKey().equals("dmin")) {
 		            	properties.setDmin((pair2.getValue() != null)?Double.parseDouble(pair2.getValue().toString()):0.0);
 		            }else if(pair2.getKey().equals("code")) {
@@ -433,12 +408,11 @@ public class EarthquakeService {
 			while (itrParticipants.hasNext()) {
 				JSONObject jObj = (itrParticipants).next();
 				Map propertiesMap = ((Map)jObj.get("properties")); 
-		          
+				SalidaModel properties = new SalidaModel();
 		        // iterating address Map 
 		        Iterator<Map.Entry> itr2 = propertiesMap.entrySet().iterator(); 
 		        while (itr2.hasNext()) {
 		            Map.Entry pair2 = itr2.next(); 
-		            SalidaModel properties = new SalidaModel();
 		            if(pair2.getKey().equals("dmin")) {
 		            	properties.setDmin((pair2.getValue() != null)?Double.parseDouble(pair2.getValue().toString()):0.0);
 		            }else if(pair2.getKey().equals("code")) {
@@ -484,8 +458,20 @@ public class EarthquakeService {
 		            }else if(pair2.getKey().equals("status")) {
 		            	properties.setStatusApi((pair2.getValue() != null)?pair2.getValue().toString():"");
 		            }
-		            if(properties.getStatusApi() != null) {
-		            	lista.add(properties);
+		            if((properties.getTitle() != null) && (properties.getStatusApi() != null)) {
+		            	logger.info("properties.getTitle(): "+properties.getTitle());
+		            	String[] direccion = properties.getTitle().split("-");
+		            	logger.info("Direcciones:"+direccion[1]);
+		            	if(direccion[1].contains(",")) {
+		            		direccion = properties.getTitle().split(",");
+		            		if(direccion[1].trim().equalsIgnoreCase(country.trim())) {
+			            		lista.add(properties);
+			            	}
+		            	}else {
+		            		if((country.equalsIgnoreCase(direccion[1]))) {
+			            		lista.add(properties);
+			            	}
+		            	}
 		            }
 		        } 
 			}	
@@ -496,6 +482,7 @@ public class EarthquakeService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		logger.info("Tamaño de la lista: "+lista.size());
 		return lista;
 	}
 	
@@ -525,17 +512,7 @@ public class EarthquakeService {
 	          
 	        // iterating address Map 
 	        Iterator<Map.Entry> itr1 = metadataMap.entrySet().iterator(); 
-	        while (itr1.hasNext()) { 
-	            Map.Entry pair = itr1.next(); 
-	            MetadataModel metadata = new MetadataModel();
-	            metadata.setGenerated(pair.getValue().toString());
-	            metadata.setCount(Integer.parseInt(pair.getValue().toString()));
-	            metadata.setApi(Double.parseDouble(pair.getValue().toString()));
-	            metadata.setTitle(pair.getValue().toString());
-	            metadata.setUrl(pair.getValue().toString());
-	            metadata.setStatus(Integer.parseInt(pair.getValue().toString())); 
-	        }
-			
+	        
 			JSONArray msg = (JSONArray) jo.get("features");
 			Iterator<JSONObject> itrParticipants = msg.iterator();
 			while (itrParticipants.hasNext()) {
@@ -616,12 +593,11 @@ public class EarthquakeService {
 			while (itr3.hasNext()) {
 				JSONObject jObj = (itr3).next();
 				Map propertiesMap = ((Map)jObj.get("properties")); 
-		          
+				SalidaModel properties = new SalidaModel();
 		        // iterating address Map 
 		        Iterator<Map.Entry> itr4 = propertiesMap.entrySet().iterator(); 
 		        while (itr4.hasNext()) {
 		            Map.Entry pair2 = itr4.next(); 
-		            SalidaModel properties = new SalidaModel();
 		            if(pair2.getKey().equals("dmin")) {
 		            	properties.setDmin((pair2.getValue() != null)?Double.parseDouble(pair2.getValue().toString()):0.0);
 		            }else if(pair2.getKey().equals("code")) {
@@ -667,8 +643,20 @@ public class EarthquakeService {
 		            }else if(pair2.getKey().equals("status")) {
 		            	properties.setStatusApi((pair2.getValue() != null)?pair2.getValue().toString():"");
 		            }
-		            if(properties.getStatusApi() != null) {
-		            	lista.add(properties);
+		            if((properties.getTitle() != null) && (properties.getStatusApi() != null)) {
+		            	logger.info("properties.getTitle(): "+properties.getTitle());
+		            	String[] direccion = properties.getTitle().split("-");
+		            	logger.info("Direcciones:"+direccion[1]);
+		            	if(direccion[1].contains(",")) {
+		            		direccion = properties.getTitle().split(",");
+		            		if(direccion[1].trim().equalsIgnoreCase(country.trim())) {
+			            		lista.add(properties);
+			            	}
+		            	}else {
+		            		if((country.equalsIgnoreCase(direccion[1]))) {
+			            		lista.add(properties);
+			            	}
+		            	}
 		            }
 		        } 
 			}

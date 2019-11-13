@@ -11,10 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cl.chl.rs.project.earthquake.model.EntradaModel;
 import cl.chl.rs.project.earthquake.model.SalidaModel;
 import cl.chl.rs.project.earthquake.service.EarthquakeService;
 import io.swagger.annotations.Api;
@@ -47,7 +48,7 @@ public class EarthquakeController {
 	}
 	
 	@CrossOrigin
-	@RequestMapping(value = EarthquakeURIConstants.OBTENEREARTHQUAKEMAGNITUD, method = RequestMethod.GET)
+	@GetMapping(value = EarthquakeURIConstants.OBTENEREARTHQUAKEMAGNITUD)
 	@ApiOperation(value = "Obtiene datos por magnitud", notes = "Retorna la informacion de los sismos en un rango de magnitudes")
 	@ApiResponses({@ApiResponse(code = HttpServletResponse.SC_OK, message = "OK"),
 		@ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "INTERNAL ERROR SERVER"),
@@ -55,12 +56,16 @@ public class EarthquakeController {
 		@ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = "FORBIDDEN"),
 		@ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "ELEMENTO NOT FOUND")
 	})
-	public @ResponseBody SalidaModel obtainDataByMagnitud(@PathVariable("magnitudIni") double magnitudIni, @PathVariable("magnitudMax") double magnitudMax) {
-		return null;
+	public @ResponseBody List<SalidaModel> obtainDataByMagnitud(@PathVariable("magnitudIni") double magnitudIni, @PathVariable("magnitudMax") double magnitudMax) {
+		List<SalidaModel> lista = new ArrayList<SalidaModel>();
+		EarthquakeService service = new EarthquakeService();
+		lista = service.obtieneDatosPorMagnitud(magnitudIni, magnitudMax);
+		logger.info("tamano lista controller: "+lista.size());
+		return lista;
 	}
 	
 	@CrossOrigin
-	@RequestMapping(value = EarthquakeURIConstants.OBTENEREARTHQUAKEDOSFECHAS, method=RequestMethod.POST)
+	@PostMapping(value = EarthquakeURIConstants.OBTENEREARTHQUAKEDOSFECHAS)
 	@ApiOperation(value = "Obtiene datos por dos fechas", notes = "Retorna la informacion de los sismos en un rango de fechas")
 	@ApiResponses({@ApiResponse(code = HttpServletResponse.SC_OK, message = "OK"),
 		@ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "INTERNAL ERROR SERVER"),
@@ -68,12 +73,17 @@ public class EarthquakeController {
 		@ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = "FORBIDDEN"),
 		@ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "ELEMENTO NOT FOUND")
 	})
-	public @ResponseBody SalidaModel obtainDataByTwoDates() {
-		return null;
+	public @ResponseBody List<SalidaModel> obtainDataByTwoDates(@RequestBody EntradaModel entrada) {
+		logger.info("Variables de fechas: "+entrada.getStarttime()+" - "+entrada.getEndtime());
+		logger.info("Variables de fechas2: "+entrada.getStarttime2()+" - "+entrada.getEndtime2());
+		List<SalidaModel> listaSalida = new ArrayList<SalidaModel>();
+		EarthquakeService service = new EarthquakeService();
+		listaSalida = service.obtieneDatosPorDosFechas(entrada.getStarttime(),entrada.getEndtime(), entrada.getStarttime2(), entrada.getEndtime2());
+		return listaSalida;
 	}
 	
 	@CrossOrigin
-	@RequestMapping(value = EarthquakeURIConstants.OBTENEREARTHQUAKECOUNTRY, method=RequestMethod.POST)
+	@GetMapping(value = EarthquakeURIConstants.OBTENEREARTHQUAKECOUNTRY)
 	@ApiOperation(value = "Obtiene datos por pais", notes = "Retorna la informacion de los sismos por un pais")
 	@ApiResponses({@ApiResponse(code = HttpServletResponse.SC_OK, message = "OK"),
 		@ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "INTERNAL ERROR SERVER"),
@@ -81,15 +91,16 @@ public class EarthquakeController {
 		@ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = "FORBIDDEN"),
 		@ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "ELEMENTO NOT FOUND")
 	})
-	public @ResponseBody List<SalidaModel> obtainDataByCountry() {
+	public @ResponseBody List<SalidaModel> obtainDataByCountry(@PathVariable("country") String country) {
+		logger.info("Valor de Country: "+country);
 		List<SalidaModel> listaSalida = new ArrayList<SalidaModel>();
 		EarthquakeService service = new EarthquakeService();
-		service.obtieneDatosPorPais("AK");
+		listaSalida = service.obtieneDatosPorPais(country);
 		return listaSalida;
 	}
 	
 	@CrossOrigin
-	@RequestMapping(value = EarthquakeURIConstants.OBTENEREARTHQUAKEDATECOUNTRY, method=RequestMethod.POST)
+	@PostMapping(value = EarthquakeURIConstants.OBTENEREARTHQUAKEDATECOUNTRY)
 	@ApiOperation(value = "Obtiene datos por pais y fechas", notes = "Retorna la informacion de los sismos por un pais y fechas")
 	@ApiResponses({@ApiResponse(code = HttpServletResponse.SC_OK, message = "OK"),
 		@ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "INTERNAL ERROR SERVER"),
@@ -97,7 +108,14 @@ public class EarthquakeController {
 		@ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = "FORBIDDEN"),
 		@ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "ELEMENTO NOT FOUND")
 	})
-	public @ResponseBody SalidaModel obtainDataByDateAndCountry() {
-		return null;
+	public @ResponseBody List<SalidaModel> obtainDataByDateAndCountry(@RequestBody EntradaModel entrada) {
+		logger.info("Variables de fechas: "+entrada.getStarttime()+" - "+entrada.getEndtime());
+		logger.info("Variables de fechas2: "+entrada.getStarttime2()+" - "+entrada.getEndtime2());
+		logger.info("Variable country: "+entrada.getCountry());
+		logger.info("Variable country2: "+entrada.getCountry2());
+		List<SalidaModel> listaSalida = new ArrayList<SalidaModel>();
+		EarthquakeService service = new EarthquakeService();
+		listaSalida = service.obtieneDatosPorDosFechasYDosPaises(entrada.getStarttime(), entrada.getEndtime(), entrada.getStarttime2(), entrada.getEndtime(), entrada.getCountry(), entrada.getCountry2());
+		return listaSalida;
 	}
 }
