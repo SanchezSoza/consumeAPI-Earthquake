@@ -1,5 +1,8 @@
 package cl.chl.rs.project.earthquake.model;
 
+/**
+ * Clase Model para indicar los parametros de entrada que tendran los servicios REST
+ */
 public class EntradaModel {
 	private String starttime;
 	private String endtime;

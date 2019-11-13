@@ -23,13 +23,30 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-
+/**
+ * Clase Controller, encargada de exponer los servicios REST para ser consumidos.
+ * {@link #obtainDataByDate(String, String)}
+ * {@link #obtainDataByMagnitud(double, double)}
+ * {@link #obtainDataByTwoDates(EntradaModel)}
+ * {@link #obtainDataByCountry(String)}
+ * {@link #obtainDataByDateAndCountry(EntradaModel)}
+ */
 @Controller
 @Api(tags = "Earthquake")
 public class EarthquakeController {
 	
+	/**
+	 * Variable para escribir en el Log
+	 */
 	private final static Logger logger = LoggerFactory.getLogger(EarthquakeController.class);
 	
+	/**
+	 * 
+	 * @param fechaIni
+	 * @param fechaFin
+	 * @return lista
+	 * Servicio REST encargado de retornar los sismos en un rango de fechas
+	 */
 	@CrossOrigin
 	@GetMapping(value = EarthquakeURIConstants.OBTENEREARTHQUAKEFECHA)
 	@ApiOperation(value = "Obtiene datos por fecha", notes = "Retorna la informacion de los sismos en un rango de fechas")
@@ -47,6 +64,13 @@ public class EarthquakeController {
 		return lista;
 	}
 	
+	/**
+	 * 
+	 * @param magnitudIni
+	 * @param magnitudMax
+	 * @return lista
+	 * Servicio REST encargado de retornar los sismos en un rango de magnitudes
+	 */
 	@CrossOrigin
 	@GetMapping(value = EarthquakeURIConstants.OBTENEREARTHQUAKEMAGNITUD)
 	@ApiOperation(value = "Obtiene datos por magnitud", notes = "Retorna la informacion de los sismos en un rango de magnitudes")
@@ -64,6 +88,13 @@ public class EarthquakeController {
 		return lista;
 	}
 	
+	/**
+	 * 
+	 * @param entrada
+	 * @return lista
+	 * Servicio REST encargado de retornar los sismos en un rango de fechas, recibe 4 fechas,
+	 * 2 fechas de entrada y 2 fechas de salida
+	 */
 	@CrossOrigin
 	@PostMapping(value = EarthquakeURIConstants.OBTENEREARTHQUAKEDOSFECHAS)
 	@ApiOperation(value = "Obtiene datos por dos fechas", notes = "Retorna la informacion de los sismos en un rango de fechas")
@@ -82,6 +113,12 @@ public class EarthquakeController {
 		return listaSalida;
 	}
 	
+	/**
+	 * 
+	 * @param country
+	 * @return lista
+	 * Servicio REST encargado de retornar los sismos de un pais
+	 */
 	@CrossOrigin
 	@GetMapping(value = EarthquakeURIConstants.OBTENEREARTHQUAKECOUNTRY)
 	@ApiOperation(value = "Obtiene datos por pais", notes = "Retorna la informacion de los sismos por un pais")
@@ -99,6 +136,12 @@ public class EarthquakeController {
 		return listaSalida;
 	}
 	
+	/**
+	 * 
+	 * @param entrada
+	 * @return lista
+	 * Servicio REST encargado de retornar los sismos en un rango de fechas y por un pais
+	 */
 	@CrossOrigin
 	@PostMapping(value = EarthquakeURIConstants.OBTENEREARTHQUAKEDATECOUNTRY)
 	@ApiOperation(value = "Obtiene datos por pais y fechas", notes = "Retorna la informacion de los sismos por un pais y fechas")

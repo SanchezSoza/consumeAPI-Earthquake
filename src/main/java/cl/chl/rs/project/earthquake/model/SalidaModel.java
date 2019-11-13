@@ -1,5 +1,8 @@
 package cl.chl.rs.project.earthquake.model;
 
+/**
+ * Clase Model para indicar la estructura de salida que tengan los servicios REST
+ */
 public class SalidaModel {
 	private String type;
 	private double mag;

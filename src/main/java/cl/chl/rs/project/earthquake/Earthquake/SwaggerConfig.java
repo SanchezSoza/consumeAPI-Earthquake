@@ -9,10 +9,18 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+/**
+ * Clase de configuracion de Swagger, para la documentacion de las APIS
+ */
+
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
 
+	/**
+	 * Metodo encargado de configurar Swagger, indicando el package al cual debe buscar
+	 * los servicios REST
+	 */
 	@Bean
 	public Docket api() {
 		return new Docket(
