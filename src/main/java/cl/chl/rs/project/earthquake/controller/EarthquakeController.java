@@ -9,8 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -48,7 +46,7 @@ public class EarthquakeController {
 	 * Servicio REST encargado de retornar los sismos en un rango de fechas
 	 */
 	@CrossOrigin
-	@GetMapping(value = EarthquakeURIConstants.OBTENEREARTHQUAKEFECHA)
+	@PostMapping(value = EarthquakeURIConstants.OBTENEREARTHQUAKEFECHA)
 	@ApiOperation(value = "Obtiene datos por fecha", notes = "Retorna la informacion de los sismos en un rango de fechas")
 	@ApiResponses({@ApiResponse(code = HttpServletResponse.SC_OK, message = "OK"),
 		@ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "INTERNAL ERROR SERVER"),
@@ -56,10 +54,12 @@ public class EarthquakeController {
 		@ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = "FORBIDDEN"),
 		@ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "ELEMENTO NOT FOUND")
 	})
-	public @ResponseBody List<SalidaModel> obtainDataByDate(@PathVariable("fechaIni") String fechaIni, @PathVariable("fechaFin") String fechaFin) {
+	public @ResponseBody List<SalidaModel> obtainDataByDate(@RequestBody EntradaModel entrada) {
+		logger.info("Fecha Inicial: "+entrada.getStarttime());
+		logger.info("Fecha Final: "+entrada.getEndtime());
 		List<SalidaModel> lista = new ArrayList<SalidaModel>();
 		EarthquakeService service = new EarthquakeService();
-		lista = service.obtieneDatosPorFecha(fechaIni, fechaFin);
+		lista = service.obtieneDatosPorFecha(entrada.getStarttime(), entrada.getEndtime());
 		logger.info("tamano lista controller: "+lista.size());
 		return lista;
 	}
@@ -72,7 +72,7 @@ public class EarthquakeController {
 	 * Servicio REST encargado de retornar los sismos en un rango de magnitudes
 	 */
 	@CrossOrigin
-	@GetMapping(value = EarthquakeURIConstants.OBTENEREARTHQUAKEMAGNITUD)
+	@PostMapping(value = EarthquakeURIConstants.OBTENEREARTHQUAKEMAGNITUD)
 	@ApiOperation(value = "Obtiene datos por magnitud", notes = "Retorna la informacion de los sismos en un rango de magnitudes")
 	@ApiResponses({@ApiResponse(code = HttpServletResponse.SC_OK, message = "OK"),
 		@ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "INTERNAL ERROR SERVER"),
@@ -80,10 +80,12 @@ public class EarthquakeController {
 		@ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = "FORBIDDEN"),
 		@ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "ELEMENTO NOT FOUND")
 	})
-	public @ResponseBody List<SalidaModel> obtainDataByMagnitud(@PathVariable("magnitudIni") double magnitudIni, @PathVariable("magnitudMax") double magnitudMax) {
+	public @ResponseBody List<SalidaModel> obtainDataByMagnitud(@RequestBody EntradaModel entrada) {
+		logger.info("Magnitud Inicial: "+entrada.getMagnitudIni());
+		logger.info("Magnitud Final: "+entrada.getMagnitudFin());
 		List<SalidaModel> lista = new ArrayList<SalidaModel>();
 		EarthquakeService service = new EarthquakeService();
-		lista = service.obtieneDatosPorMagnitud(magnitudIni, magnitudMax);
+		lista = service.obtieneDatosPorMagnitud(entrada.getMagnitudIni(), entrada.getMagnitudFin());
 		logger.info("tamano lista controller: "+lista.size());
 		return lista;
 	}
@@ -120,7 +122,7 @@ public class EarthquakeController {
 	 * Servicio REST encargado de retornar los sismos de un pais
 	 */
 	@CrossOrigin
-	@GetMapping(value = EarthquakeURIConstants.OBTENEREARTHQUAKECOUNTRY)
+	@PostMapping(value = EarthquakeURIConstants.OBTENEREARTHQUAKECOUNTRY)
 	@ApiOperation(value = "Obtiene datos por pais", notes = "Retorna la informacion de los sismos por un pais")
 	@ApiResponses({@ApiResponse(code = HttpServletResponse.SC_OK, message = "OK"),
 		@ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "INTERNAL ERROR SERVER"),
@@ -128,11 +130,11 @@ public class EarthquakeController {
 		@ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = "FORBIDDEN"),
 		@ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "ELEMENTO NOT FOUND")
 	})
-	public @ResponseBody List<SalidaModel> obtainDataByCountry(@PathVariable("country") String country) {
-		logger.info("Valor de Country: "+country);
+	public @ResponseBody List<SalidaModel> obtainDataByCountry(@RequestBody EntradaModel entrada) {
+		logger.info("Valor de Country: "+entrada.getCountry());
 		List<SalidaModel> listaSalida = new ArrayList<SalidaModel>();
 		EarthquakeService service = new EarthquakeService();
-		listaSalida = service.obtieneDatosPorPais(country);
+		listaSalida = service.obtieneDatosPorPais(entrada.getCountry());
 		return listaSalida;
 	}
 	

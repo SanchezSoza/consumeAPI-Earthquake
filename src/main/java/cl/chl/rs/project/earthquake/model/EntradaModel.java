@@ -10,16 +10,24 @@ public class EntradaModel {
 	private String endtime2;
 	private String country;
 	private String country2;
+	private double magnitudIni;
+	private double magnitudFin;
 	
-	public EntradaModel(String starttime, String endtime, String starttime2, String endtime2, String country, String country2) {
+	public EntradaModel(String starttime, String endtime, String starttime2, String endtime2, String country, String country2, double magnitudIni, double magnitudFin) {
 		this.starttime = starttime;
 		this.endtime = endtime;
 		this.starttime2 = starttime2;
 		this.endtime2 = endtime2;
 		this.country = country;
 		this.country2 = country2;
+		this.magnitudIni = magnitudIni;
+		this.magnitudFin = magnitudFin;
 	}
 
+	public EntradaModel() {
+
+	}
+	
 	public String getStarttime() {
 		return starttime;
 	}
@@ -66,5 +74,21 @@ public class EntradaModel {
 
 	public void setCountry2(String country2) {
 		this.country2 = country2;
+	}
+
+	public double getMagnitudIni() {
+		return magnitudIni;
+	}
+
+	public void setMagnitudIni(double magnitudIni) {
+		this.magnitudIni = magnitudIni;
+	}
+
+	public double getMagnitudFin() {
+		return magnitudFin;
+	}
+
+	public void setMagnitudFin(double magnitudFin) {
+		this.magnitudFin = magnitudFin;
 	}
 }

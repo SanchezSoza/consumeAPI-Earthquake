@@ -632,11 +632,11 @@ public class EarthquakeService {
 		            	logger.info("Direcciones:"+direccion[1]);
 		            	if(direccion[1].contains(",")) {
 		            		direccion = properties.getTitle().split(",");
-		            		if(direccion[1].trim().equalsIgnoreCase(country.trim())) {
+		            		if(direccion[1].trim().equalsIgnoreCase(country.trim()) || direccion[1].trim().equalsIgnoreCase(country2.trim())) {
 			            		lista.add(properties);
 			            	}
 		            	}else {
-		            		if((country.equalsIgnoreCase(direccion[1]))) {
+		            		if((country.equalsIgnoreCase(direccion[1])) || country2.equalsIgnoreCase(direccion[1])) {
 			            		lista.add(properties);
 			            	}
 		            	}
@@ -718,11 +718,11 @@ public class EarthquakeService {
 		            	logger.info("Direcciones:"+direccion[1]);
 		            	if(direccion[1].contains(",")) {
 		            		direccion = properties.getTitle().split(",");
-		            		if(direccion[1].trim().equalsIgnoreCase(country2.trim())) {
+		            		if(direccion[1].trim().equalsIgnoreCase(country.trim()) || direccion[1].trim().equalsIgnoreCase(country2.trim())) {
 			            		lista.add(properties);
 			            	}
 		            	}else {
-		            		if((country2.equalsIgnoreCase(direccion[1]))) {
+		            		if((country.equalsIgnoreCase(direccion[1])) || country2.equalsIgnoreCase(direccion[1])) {
 			            		lista.add(properties);
 			            	}
 		            	}
