@@ -21,6 +21,13 @@ El programa tiene una ruta para escribir los logs la cual es:
 ## Endpoints
 Endpoints publicos para la ejecucion de los servicios REST
 
+## Swagger (http://localhost:9090/earthquake/swagger-ui.html#/)
+Web para obtener la documentacion de las APIS en Swagger
+
+WEB: http://localhost:9090/earthquake/swagger-ui.html#/
+
+
+
 ## [/service/obtainbyfecha](http://localhost:9090/earthquake/service/obtainbyfecha)
 
 Endpoint encargado de obtener los temblores y terremotos con una fecha inicial y una fecha final
