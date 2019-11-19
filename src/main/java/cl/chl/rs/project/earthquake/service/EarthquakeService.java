@@ -19,6 +19,7 @@ import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import cl.chl.rs.earthquake.util.IniProperties;
 import cl.chl.rs.project.earthquake.model.SalidaModel;
 
 
@@ -49,7 +50,11 @@ public class EarthquakeService {
 
 		String result = "";
 		HttpClient httpclient = HttpClientBuilder.create().build();
-		String url = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime="+fechaIni+"&endtime="+fechaFin	;
+		String urlAux = "";
+		if(IniProperties.inicializador()) {
+			urlAux = IniProperties.getPropiedad("prop.url");
+		}
+		String url = urlAux + "&starttime="+fechaIni+"&endtime="+fechaFin	;
     	logger.info("URL: "+url);
     	HttpGet httpget = new HttpGet(url);
     	List<SalidaModel> lista = new ArrayList<SalidaModel>();
@@ -149,7 +154,11 @@ public class EarthquakeService {
 
 		String result = "";
 		HttpClient httpclient = HttpClientBuilder.create().build();
-		String url = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&minmagnitude="+magnitudIni+"&maxmagnitude="+magnitudFin;
+		String urlAux = "";
+		if(IniProperties.inicializador()) {
+			urlAux = IniProperties.getPropiedad("prop.url");
+		}
+		String url = urlAux + "&minmagnitude="+magnitudIni+"&maxmagnitude="+magnitudFin;
     	logger.info("URL: "+url);
     	HttpGet httpget = new HttpGet(url);
     	List<SalidaModel> lista = new ArrayList<SalidaModel>();
@@ -250,7 +259,11 @@ public class EarthquakeService {
 
 		String result = "";
 		HttpClient httpclient = HttpClientBuilder.create().build();
-		String url = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime="+fechaIni+"&endtime="+fechaFin;
+		String urlAux = "";
+		if(IniProperties.inicializador()) {
+			urlAux = IniProperties.getPropiedad("prop.url");
+		}
+		String url = urlAux + "&starttime="+fechaIni+"&endtime="+fechaFin;
     	logger.info("URL: "+url);
     	HttpGet httpget = new HttpGet(url);
     	List<SalidaModel> lista = new ArrayList<SalidaModel>();
@@ -335,7 +348,7 @@ public class EarthquakeService {
 		        } 
 			}
 			
-			url = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime="+fechaIni2+"&endtime="+fechaFin2;
+			url = urlAux + "&starttime="+fechaIni2+"&endtime="+fechaFin2;
 			httpget = new HttpGet(url);
 			response = httpclient.execute(httpget);
 			rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
@@ -430,7 +443,11 @@ public class EarthquakeService {
 
 		String result = "";
 		HttpClient httpclient = HttpClientBuilder.create().build();
-		String url = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson";
+		String urlAux = "";
+		if(IniProperties.inicializador()) {
+			urlAux = IniProperties.getPropiedad("prop.url");
+		}
+		String url = urlAux;
     	logger.info("URL: "+url);
     	HttpGet httpget = new HttpGet(url);
     	List<SalidaModel> lista = new ArrayList<SalidaModel>();
@@ -547,7 +564,11 @@ public class EarthquakeService {
 
 		String result = "";
 		HttpClient httpclient = HttpClientBuilder.create().build();
-		String url = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime="+fechaIni+"&endtime="+fechaFin;
+		String urlAux = "";
+		if(IniProperties.inicializador()) {
+			urlAux = IniProperties.getPropiedad("prop.url");
+		}
+		String url = urlAux + "&starttime="+fechaIni+"&endtime="+fechaFin;
     	logger.info("URL: "+url);
     	HttpGet httpget = new HttpGet(url);
     	List<SalidaModel> lista = new ArrayList<SalidaModel>();
@@ -644,7 +665,7 @@ public class EarthquakeService {
 		        } 
 			}
 			
-			url = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime="+fechaIni2+"&endtime="+fechaFin2;
+			url = urlAux + "&starttime="+fechaIni2+"&endtime="+fechaFin2;
 			httpget = new HttpGet(url);
 			response = httpclient.execute(httpget);
 			rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));

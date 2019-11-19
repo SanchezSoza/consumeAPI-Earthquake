@@ -1,4 +1,4 @@
-package cl.chl.rs.project.earthquake.Earthquake;
+package cl.chl.rs.project.earthquake.earthquake;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
