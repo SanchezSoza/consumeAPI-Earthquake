@@ -8,7 +8,7 @@
 	   <param name="maxFileSize" value="204000KB" />
 	   <param name="maxBackupIndex" value="5" />
 	   
-	   <param name="file" value="C:/logs/APPS/JAMES/earthquake.log" />
+	   <param name="file" value="C:/logs/APPS/EARTHQUAKE/earthquake.log" />
 	   <layout class="org.apache.log4j.PatternLayout">
 		<param name="ConversionPattern"
 			value="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n" />

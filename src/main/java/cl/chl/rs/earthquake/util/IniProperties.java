@@ -38,14 +38,11 @@ public class IniProperties {
 		Constantes constantes = new Constantes();
 		logger.info("rutaProperties : "+constantes.pathProperties);
 		
-		//System.out.println("RUTA_FICHEROS_ENTORNO = "+RUTA_FICHEROS_ENTORNO);
 		directorio_properties = constantes.pathProperties;
-		//System.getProperty(RUTA_FICHEROS_ENTORNO);
 		if(directorio_properties==null)
 		{
 			directorio_properties = System.getenv(constantes.pathProperties);
 		}
-		//System.out.println(directorio_properties);
 		logger.info(directorio_properties);
 		if(directorio_properties!=null && existeDirectorio(directorio_properties)){
 			//Como el directorio existe, cargo el nombre del fichero

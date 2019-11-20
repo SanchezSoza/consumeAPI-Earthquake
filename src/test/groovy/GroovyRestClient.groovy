@@ -83,7 +83,7 @@ class GroovyRestClient extends Specification{
 		when:
 			def resp = client.post(
 				path:"earthquake/services/obtainbydateandcountry",
-				body:[starttime:'2019-10-01', endtime: '2019-10-03',starttime2: '2019-10-06', endtime2: '2019-10-14', country:'Alaska', country2: 'CA'],
+				body:[starttime:'2019-10-01', endtime: '2019-10-03',starttime2: '2019-10-06', endtime2: '2019-10-14', country:'Alaska', country2: 'Indonesia'],
 				requestContentType :'application/json'
 				)
 		then: 'server returns set of data earthquake'
